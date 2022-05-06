@@ -1,0 +1,20 @@
+| Append     | Insert        | Array Size     |
+|:----------:|:-------------:|:--------------:|
+| 3.47975 ms | 1.073060916 s | extraLargeArray|
+| 618.25 μs	 | 9.499791 ms	 | largeArray     |
+| 136.833 μs | 199.166 μs	 | mediumArray    |
+| 92.375 μs	 | 37.375 μs	 | smallArray     |
+| 76.542 μs	 | 26.167 μs     | tinyArray      |
+
+
+
+Read over the results, and write a paragraph that explains the pattern you see. How does each function “scale”? Which of the two functions scales better? How can you tell?
+
+The function that uses unshift sees a more dramatic increase in time than the one that uses push as the array size increases.
+doublerAppend scales better although it initially seems insert appears to perform well with a smaller array size. This can be noticed by the insert function getting exponentially slower as the size of the array increases.
+
+For extra credit, do some review / research on why the slower function is so slow, and summarize the reasoning for this.
+
+The slower function is slower due to the nature of unshift. This method requires the reallocation of each element in the array with each operation.
+As a new number is added to the front of the array, all of the existing elements must now be adjusted in their placement within that array.
+By default, push has a runtime of O(1) and unshift has a runtime of O(n).
