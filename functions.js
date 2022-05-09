@@ -19,9 +19,9 @@ const addToZero = arr => {
 //runtime = O(n^2), not efficient
 //space = O(1)
 
-console.log(addToZero([1, 2, 3, -2]));
-console.log(addToZero([1, 2, 3]))
-console.log(addToZero([-4, 2, 6, -6]))
+// console.log(addToZero([1, 2, 3, -2]));
+// console.log(addToZero([1, 2, 3]))
+// console.log(addToZero([-4, 2, 6, -6]))
 
 //2. Write a function that takes in a single word, as a string. It should return True if that word contains only unique characters. Return False otherwise.
 
@@ -30,13 +30,23 @@ console.log(addToZero([-4, 2, 6, -6]))
 //change all letters to lowercase
 //if a new set of the given word is not the same length as that word, then non-unique values were removed
 
-const hasUniqueChars = word => {
-    word = word.toLowerCase();
-    return new Set(word).size === word.length;
-}
+// const hasUniqueChars = word => {
+//     word = word.toLowerCase();
+//     return new Set(word).size === word.length;
+// }
 
-//runtime: O(1) - set has a time complexity of O(1)
-//space = O(1)
+const hasUniqueChars = word => {
+    word=word.toLowerCase();
+    for (let i = 0; i < word.length; i++) {
+        for (let j = i + 1; j < word.length; j++) {
+            if (word[i] === word[j]) {
+               return false;
+            }
+        }
+    }   return true;
+}
+//runtime: O(n^2)
+//space = O(n)
 
 // console.log(hasUniqueChars("Monday"));
 // console.log(hasUniqueChars("MOonday"));
@@ -50,22 +60,47 @@ const hasUniqueChars = word => {
 //if indexOf the current letter of alphabet is -1 in the sentence, return false
 //otherwise return true
 
-const isPangram = sentence => {
-    sentence = sentence.toLowerCase();
-    let alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    for(let letter = 0; letter < alphabet.length; letter++) {
-        if(sentence.indexOf(alphabet[letter]) === -1) {
-            return false
+// const isPangram = sentence => {
+//     sentence = sentence.toLowerCase();
+//     let alphabet = 'abcdefghijklmnopqrstuvwxyz';
+//     for(let letter = 0; letter < alphabet.length; letter++) {
+//         if(sentence.indexOf(alphabet[letter]) === -1) {
+//             return false
+//         }
+//     }
+//     return true;
+// }
+
+const isPangram = str => {
+    str = str.toLowerCase().replace(/([^a-z])+/g, '');
+    let map = {};
+
+    for (let i = 0; i < str.length; i++) {
+        let letter = str[i];
+        if (map[letter]) {
+            map[letter] += 1;
+        } else {
+            map[letter] = 1
         }
     }
-    return true;
+
+    let count = 0;
+    for(let key in map) {
+        count++;
+    }
+
+    if(count >= 26){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 //runtime: O(n)
-//space: O(1)
+//space: O(n)
 
-// console.log(isPangram("The quick brown fox jumps over the lazy dog!"));
-// console.log(isPangram("I like cats, but not mice"));
+console.log(isPangram("The quick brown fox jumps over the lazy dog!"));
+console.log(isPangram("I like cats, but not mice"));
 
 //4. Write a function, find_longest_word, that takes a list of words and returns the length of the longest one.
 
